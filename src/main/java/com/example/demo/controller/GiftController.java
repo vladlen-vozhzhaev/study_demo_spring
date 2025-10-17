@@ -6,7 +6,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.List;
 
 @Controller
 public class GiftController {
@@ -29,5 +32,18 @@ public class GiftController {
     public String addGift(@ModelAttribute Gift gift){
         giftRepository.save(gift);
         return "redirect:/add";
+    }
+    @GetMapping("/gifts")
+    public String showAllGift(Model model){
+        List<Gift> gifts = giftRepository.findAll();
+        model.addAttribute("gifts", gifts);
+        return "gift-list";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String showEditGift(@PathVariable Long id, Model model){
+        Gift gift = giftRepository.findById(id).orElseThrow();
+        model.addAttribute("gift", gift);
+        return "edit-gift";
     }
 }
