@@ -46,4 +46,18 @@ public class GiftController {
         model.addAttribute("gift", gift);
         return "edit-gift";
     }
+
+    @PostMapping("/edit/{id}")
+    public String updateGift(@PathVariable Long id, @ModelAttribute Gift uploadGift){
+        Gift gift = giftRepository.findById(id).orElseThrow();
+        gift.setName(uploadGift.getName());
+        gift.setDescription(uploadGift.getDescription());
+        giftRepository.save(gift);
+        return "redirect:/gifts";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteGift(@PathVariable Long id){
+        giftRepository.deleteById(id);
+        return "redirect:/gifts";
+    }
 }

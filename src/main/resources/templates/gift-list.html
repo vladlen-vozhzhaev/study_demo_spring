@@ -23,7 +23,7 @@
                         <td th:text="${gift.description}"></td>
                         <td>
                             <a th:href="@{/edit/{id}(id=${gift.id})}">Изменить</a>
-                            <a href="#">Удалить</a>
+                            <a th:href="@{/delete/{id}(id=${gift.id})}">Удалить</a>
                         </td>
                     </tr>
                 </tbody>
